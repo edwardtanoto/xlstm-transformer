@@ -1,177 +1,81 @@
-# Stock Price Prediction with Advanced Neural Networks
+# Hybrid xLSTM-Transformer for Financial Time Series Prediction
+[Full Dissertation](https://drive.google.com/drive/u/0/my-drive).
 
-This project implements and compares different neural network architectures for stock price prediction, including a novel hybrid xLSTM-Transformer model. The implementation combines traditional approaches with cutting-edge architectures to analyze and predict stock price movements.
+## Overview
 
-## Models Implemented
+`main.py` implements a state-of-the-art hybrid neural network for time series prediction, combining the strengths of xLSTM and Transformer architectures. This model is designed to capture both local and global dependencies in financial time series, such as stock or cryptocurrency prices, and supports multi-ticker (multi-asset) prediction.
 
-1. **Hybrid xLSTM-Transformer**
-   - Combines the strengths of xLSTM and Transformer architectures
-   - Uses an embedding layer followed by transformer encoding and xLSTM processing
-   - Designed for capturing both local and global patterns in time series data
+## Features
+- **Hybrid Model**: Combines xLSTM (advanced RNN) and Transformer (self-attention) branches with a fusion layer.
+- **Multi-Ticker Support**: Learns from multiple assets simultaneously.
+- **Robust Data Handling**: Includes quantile clipping, feature scaling, and data integrity checks.
+- **Modern Training Techniques**: Gradient clipping, early stopping, learning rate scheduling, and mixed-precision (AMP) support.
+- **Experiment Tracking**: Integrated with [Weights & Biases (wandb)](https://wandb.ai/).
+- **Hardware Acceleration**: Supports CUDA, MPS (Apple Silicon), and CPU.
 
-2. **Basic LSTM**
-   - Traditional LSTM implementation
-   - Serves as a baseline model for comparison
-   - Well-suited for sequential data processing
+## Installation
 
-3. **Basic Transformer**
-   - Pure transformer-based architecture
-   - Utilizes self-attention mechanisms
-   - Effective at capturing long-range dependencies
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd xlstm
+   ```
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. **Basic xLSTM**
-   - Implementation of the xLSTM architecture
-   - Combines modern LSTM variants with advanced processing techniques
-   - Designed for enhanced temporal feature extraction
+## Data Preparation
 
-## Key Features
-
-- Multi-ticker support for processing multiple stock symbols
-- Custom dataset implementation for handling time series data
-- Comprehensive evaluation metrics (MSE and MAE in both normalized and original scales)
-- Visualization of predictions vs actual values
-- Flexible model configurations and hyperparameter settings
-
-## Technical Architecture
-
-### Data Processing
-- Uses `StockDataset` class for creating sequential data samples
-- Implements MinMaxScaler for data normalization
-- Supports batch processing through PyTorch's DataLoader
-
-### Model Components
-- Embedding layers for initial data transformation
-- Transformer encoder layers with multi-head attention
-- xLSTM blocks with configurable architectures
-- Feed-forward networks for final predictions
-
-## Configuration
-
-The models use the following default hyperparameters:
-- Sequence Length: 30
-- Hidden Dimension: 64
-- Number of Transformer Layers: 2
-- Number of Attention Heads: 4
-- Number of xLSTM Blocks: 3
-- Batch Size: 32
-- Training Epochs: 30
+- The script expects a CSV file with columns: `time`, `code`, `close`, `volume`, `turnover`.
+- Example: `crypto_data_2013_2021.csv` or your own stock/crypto dataset.
+- Place your data file in the project directory.
 
 ## Usage
 
-The main script handles:
-1. Data loading and preprocessing
-2. Model initialization and training
-3. Evaluation and performance comparison
-4. Visualization of results
+Run the main script with your data:
 
-## Requirements
+```bash
+python xlstm-tf.py --data_path <your_data.csv> --epochs 100 --batch_size 64
+```
 
-- PyTorch
-- Pandas
-- NumPy
-- Matplotlib
-- Scikit-learn
-- xLSTM package
+**Common arguments:**
+- `--data_path`: Path to your CSV data file.
+- `--epochs`: Number of training epochs (default: 100).
+- `--batch_size`: Batch size for training (default: 64).
+- `--seq_len`: Sequence length for time series windows (default: 30).
+- `--device`: `cuda`, `mps`, or `cpu` (auto-detected if not specified).
 
-## Model Evaluation
+For all options, run:
 
-The system evaluates models using:
-- Mean Squared Error (MSE)
-- Mean Absolute Error (MAE)
-- Both normalized and original scale metrics
-- Visual comparison through prediction plots
+```bash
+python xlstm-tf.py --help
+```
 
-## Output
+## Outputs
+- Training and validation metrics (MSE, MAE, R²) are logged.
+- Model checkpoints and prediction plots are saved in the working directory.
+- Integration with Weights & Biases (wandb) for experiment tracking.
 
-Each model generates:
-- Training loss metrics
-- Evaluation metrics in both normalized and original scales
-- Prediction plots saved as PNG files
-- Comparative performance analysis
+## Model Impact
 
-## Hardware Acceleration
+### Why Hybrid xLSTM-Transformer?
+- **xLSTM**: An advanced RNN architecture that overcomes traditional LSTM limitations, providing better long-term memory and stability ([xLSTM paper](https://arxiv.org/abs/2405.04517)).
+- **Transformer**: Excels at modeling global dependencies via self-attention.
+- **Fusion Layer**: Combines both representations, leveraging the strengths of each.
 
-The code automatically detects and utilizes available hardware acceleration:
-- MPS (Metal Performance Shaders) for Apple Silicon
-- Falls back to CPU if MPS is not available
+### Key Benefits
+- **Superior Sequence Modeling**: Captures both short-term and long-term patterns in financial data.
+- **Multi-Ticker Generalization**: Learns from multiple assets, improving robustness and generalization.
+- **Research-Backed**: Implements the latest advances in recurrent and attention-based architectures.
+- **Flexible & Extensible**: Easily adaptable to other time series domains (energy, weather, etc.).
 
-## Results
+### Real-World Impact
+- **Improved Forecasting**: Outperforms traditional LSTM and vanilla Transformer models on financial time series.
+- **Robust Training**: Modern best practices for stability and reproducibility.
+- **Open Source**: Enables further research and practical applications in finance and beyond.
 
-The project generates several visualization files to help analyze and compare model performances:
-
-### Individual Model Predictions
-Each model generates a prediction plot (`prediction_plot_[ModelName].png`) that shows:
-- Actual stock prices vs. predicted values
-- Time series visualization of prediction accuracy
-- Available for all four models:
-  - Hybrid xLSTM-Transformer
-  - Basic LSTM
-  - Basic Transformer
-  - Basic xLSTM
-
-### Model Comparison
-The `model_comparison_mse.png` provides a comparative analysis of model performances:
-- Mean Squared Error (MSE) comparison across all models
-- Visual representation of relative model accuracies
-- Higher resolution (1200x600) for detailed analysis
-
-These visualizations help in:
-- Evaluating each model's prediction accuracy
-- Comparing performance across different architectures
-- Identifying strengths and weaknesses of each approach
-- Understanding the impact of different neural network architectures on stock price prediction
-
-## Model Improvements
-
-### Initial Implementation Issues
-The initial Hybrid xLSTM-Transformer model showed suboptimal performance due to several limitations:
-
-1. **Architecture Limitations**
-   - Sequential processing (Transformer → xLSTM)
-   - Limited information flow between components
-   - Potential loss of features in the pipeline
-
-2. **Hyperparameter Constraints**
-   - Hidden dimension: 64
-   - Transformer layers: 2
-   - Attention heads: 4
-   - xLSTM blocks: 3
-   - Batch size: 32
-   - Training epochs: 30
-
-3. **Data Utilization**
-   - Only using closing price
-   - Limited feature engineering
-   - No multi-feature analysis
-
-### Improvements Implemented
-
-1. **Enhanced Architecture**
-   - Parallel processing branches for Transformer and xLSTM
-   - Feature fusion layer for combining outputs
-   - Improved information flow and feature preservation
-
-2. **Optimized Hyperparameters**
-   - Hidden dimension: 128 (2x increase)
-   - Transformer layers: 4 (2x increase)
-   - Attention heads: 8 (2x increase)
-   - xLSTM blocks: 4 (33% increase)
-   - Batch size: 64 (2x increase)
-   - Training epochs: 100 (3.3x increase)
-
-3. **Enhanced Data Processing**
-   - Multiple input features:
-     - Closing price
-     - Trading volume
-     - RSI (Relative Strength Index)
-     - MACD (Moving Average Convergence Divergence)
-     - 1-day returns
-     - 5-day volatility
-
-4. **Advanced Training Configuration**
-   - Learning rate scheduling with ReduceLROnPlateau
-   - Gradient clipping (max norm: 1.0)
-   - Early stopping mechanism
-   - Improved optimization strategy
-
-These improvements aim to address the root causes of poor performance and enhance the model's prediction capabilities # xlstm-transformer
+## References
+- [xLSTM: Extended Long Short-Term Memory (arXiv:2405.04517)](https://arxiv.org/abs/2405.04517)
+- [xLSTM Python Package](https://github.com/NX-AI/xlstm)
+- [Transformers (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762)
