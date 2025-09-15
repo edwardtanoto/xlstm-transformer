@@ -5,6 +5,10 @@
 
 `main.py` implements a state-of-the-art hybrid neural network for time series prediction, combining the strengths of xLSTM and Transformer architectures. This model is designed to capture both local and global dependencies in financial time series, such as stock or cryptocurrency prices, and supports multi-ticker (multi-asset) prediction.
 
+## Architecture
+<img width="277" height="793" alt="Screenshot 2025-09-15 at 11 37 06" src="https://github.com/user-attachments/assets/c2866e4f-c649-4057-ae4a-5f62d6aa3a6e" />
+
+
 ## Features
 - **Hybrid Model**: Combines xLSTM (advanced RNN) and Transformer (self-attention) branches with a fusion layer.
 - **Multi-Ticker Support**: Learns from multiple assets simultaneously.
@@ -39,19 +43,6 @@ Run the main script with your data:
 python main.py --data_path <your_data.csv> --epochs 100 --batch_size 64
 ```
 
-**Common arguments:**
-- `--data_path`: Path to your CSV data file.
-- `--epochs`: Number of training epochs (default: 100).
-- `--batch_size`: Batch size for training (default: 64).
-- `--seq_len`: Sequence length for time series windows (default: 30).
-- `--device`: `cuda`, `mps`, or `cpu` (auto-detected if not specified).
-
-For all options, run:
-
-```bash
-python xlstm-tf.py --help
-```
-
 ## Outputs
 - Training and validation metrics (MSE, MAE, R²) are logged.
 - Model checkpoints and prediction plots are saved in the working directory.
@@ -69,6 +60,12 @@ python xlstm-tf.py --help
 - **Multi-Ticker Generalization**: Learns from multiple assets, improving robustness and generalization.
 - **Research-Backed**: Implements the latest advances in recurrent and attention-based architectures.
 - **Flexible & Extensible**: Easily adaptable to other time series domains (energy, weather, etc.).
+
+### Benchmark
+
+<img width="442" height="302" alt="Screenshot 2025-09-15 at 11 38 27" src="https://github.com/user-attachments/assets/adc2682b-4f26-4a21-8619-840eb2f92946" />
+
+
 
 ### Real-World Impact
 - **Improved Forecasting**: Outperforms traditional LSTM and vanilla Transformer models on financial time series.
