@@ -27,8 +27,8 @@
 
 ## Data Preparation
 
-- The script expects a CSV file with columns: `time`, `code`, `close`, `volume`, `turnover`.
-- Example: `crypto_data_2013_2021.csv` or your own stock/crypto dataset.
+- The script expects a CSV file with columns: `code`, `open`, `close`, `volume`, `turnover`, `time`, `high`, `low`.
+- Example: `filtered_stock_data.csv` or your own stock/crypto dataset.
 - Place your data file in the project directory.
 
 ## Usage
@@ -36,7 +36,7 @@
 Run the main script with your data:
 
 ```bash
-python xlstm-tf.py --data_path <your_data.csv> --epochs 100 --batch_size 64
+python main.py --data_path <your_data.csv> --epochs 100 --batch_size 64
 ```
 
 **Common arguments:**
