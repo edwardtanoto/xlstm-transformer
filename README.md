@@ -1,6 +1,21 @@
 # Hybrid xLSTM-Transformer for Financial Time Series Prediction
 [Full Dissertation](https://drive.google.com/drive/u/0/my-drive).
 
+## Abstract
+
+Transformer and LSTM models have made great strides in time-series
+forecasting but have their respective disadvantages. LSTMs have difficulties
+in parallelization while transformers find it hard to handle long sequences.
+Hybrid models, which utilize both architectures but still suffer from drawbacks
+such as, computational overhead and dependency on datasets have emerged.
+In this study, we introduce a new hybrid architecture xLSTM-Transformer,
+which combines scalar LSTM (sLSTM) for adaptive gating and matrix LSTM
+(mLSTM) for augmentation of memory capacity. The model enhances both
+feature extraction and attention mechanisms, at the same time achieves
+computational efficiency. Evaluations on climate, finance, and environment
+datasets show better accuracy than standalone models, providing a powerful
+approach for complex time-series forecasting.
+
 ## Overview
 
 `main.py` implements a state-of-the-art hybrid neural network for time series prediction, combining the strengths of xLSTM and Transformer architectures. This model is designed to capture both local and global dependencies in financial time series, such as stock or cryptocurrency prices, and supports multi-ticker (multi-asset) prediction.
