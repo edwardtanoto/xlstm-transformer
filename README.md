@@ -66,6 +66,33 @@ python main.py --data_path <your_data.csv> --epochs 100 --batch_size 64
 <img width="442" height="302" alt="Screenshot 2025-09-15 at 11 38 27" src="https://github.com/user-attachments/assets/adc2682b-4f26-4a21-8619-840eb2f92946" />
 
 
+The empirical results demonstrate the superior performance of the proposed
+xLSTM-Transformer hybrid architecture on the stock price prediction task.
+The xLSTM-Transformer achieved the lowest Mean Absolute Error (MAE) of
+3.304, indicating the highest average accuracy in predicting stock prices. This32
+represents an improvement over the LSTM baseline (MAE of 3.806) and a
+significant improvement over the Transformer baseline (MAE of 25.346).
+Furthermore, the xLSTM-Transformer's substantial reductions in Mean
+Squared Error (MSE) to 57.864 and Root Mean Squared Error (RMSE) to
+7.607, compared to LSTM (MSE of 77.088, RMSE of 8.780) and Transformer
+(MSE of 2621.566, RMSE of 51.201), highlight its enhanced ability to avoid
+large prediction errors, a critical advantage in financial forecasting. The RMSE
+suggests a typical prediction error of approximately $7.61 for the hybrid model,
+lower than the $8.78 of LSTM. The xLSTM-Transformer also exhibits the
+lowest scaled test loss (0.0005075), showing 13.19% improvement over LSTM and 86.97% over Transformers. While it has a higher runtime and a lower step than
+LSTM, it achieves this with a lower number of epochs, indicating a more
+efficient convergence. LSTM's reasonable performance confirms the value of
+recurrence in this time-series prediction task. In contrast, the Transformer's
+struggle highlights potential challenges for pure self-attention models in
+Transformer, indicating that pure self-attention architectures such as the
+Transformer may not be capable of handling noisy financial data with similar
+performance to specialized models or hybrid architectures that allow for
+temporal processing like the xLSTM.
+
+Overall, a strong hypothesis is made that
+the synergy of xLSTM and Transformer can be more effective in stock market
+prediction than traditional paradigms alone. 
+
 
 ### Real-World Impact
 - **Improved Forecasting**: Outperforms traditional LSTM and vanilla Transformer models on financial time series.
